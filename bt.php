@@ -44,3 +44,21 @@ for ($i=1; $i <= 36 ; $i++) {
 	}
 }
 echo $tong;
+
+echo "<h1>Tam giác vuông</h1>";
+
+for ($i=0; $i < 10 ; $i++) { 
+	for ($j=0; $j <= $i ; $j++) { 
+		echo '* ';
+	}
+	echo '<br>';
+}
+
+echo "<h1>Tam giác đều</h1>";
+
+for ($i=1; $i < 10 ; $i++) { 
+	for ($j=0; $j < $i ; $j++) { 
+		echo ' * ';
+	}
+	echo '<br>';
+}
