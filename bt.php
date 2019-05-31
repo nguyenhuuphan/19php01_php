@@ -2,16 +2,19 @@
 
 echo "<h1>1</h1>";
 
-$count = $qt5 = $qt2 = $qt1 = 0;
+$count = 0;
+$qt5 = $qt2 = $qt1 = 1;
 $qt5*5 + $qt1*1 + $qt2*2 == 100;
-for ($qt5=0; $qt5 <= 40 ; $qt5++) { 
-	for($qt1 = 0; $qt1 <=100; $qt1++){
+for ($qt5=1; $qt5 <= 100 ; $qt5++) { 
+	for($qt1 = 1; $qt1 <=100; $qt1++){
 		if($qt5*5 + $qt1*1 <= 100) {
 			echo $count . '-----' . $qt5 . " tờ 50.000, " . $qt2 . " tờ 20.000, " . (100 - 5*$qt5 - 2*$qt2) . " tờ 10.000" . "<br>";
                 $count++;
 		}
 	}
 }
+
+echo $count;
 
 
 
