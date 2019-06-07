@@ -11,7 +11,6 @@
 <body>
 
 	<?php
-	echo 'git';
 		$name = $email = $sdt = $gender = $city = $date = $errName = $errEmail = $errSdt = $errGender = $errCity = $errDate = '';
 		if(isset($_POST['register_submit'])) {
 			$name = $_POST['name'];
