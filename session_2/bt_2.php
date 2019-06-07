@@ -2,10 +2,16 @@
 <html>
 <head>
 	<title>BT 2</title>
+	<style type="text/css">
+		span {
+			color: red;
+		}
+	</style>
 </head>
 <body>
 
 	<?php
+	echo 'git';
 		$name = $email = $sdt = $gender = $city = $date = $errName = $errEmail = $errSdt = $errGender = $errCity = $errDate = '';
 		if(isset($_POST['register_submit'])) {
 			$name = $_POST['name'];
