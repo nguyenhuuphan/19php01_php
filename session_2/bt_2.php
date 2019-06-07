@@ -22,7 +22,7 @@
 			'hcm' => 'Hồ Chí Minh',
 		);
 
-		$name = $email = $sdt = $gender = $city = $date = $errName = $errEmail = $errSdt = $errGender = $errCity = $errDate = '';
+		$name = $email = $sdt = $gender = $city = $date = $avatar_name = $errName = $errEmail = $errSdt = $errGender = $errCity = $errDate = '';
 		if(isset($_POST['register_submit'])) {
 			$name = $_POST['name'];
 			$email = $_POST['email'];
@@ -79,16 +79,31 @@
 				$errDate = '';
 				$check = true;
 			}
+
 			if($check) {
 				echo "Name: $name <br> Email: $email <br> Phone: $sdt <br> Gender: " . $arrGender["$gender"] . "<br> City: " . $arrCity["$city"] . "<br>" . "Birthday: $date";
+
+				// Upload Avatar
+
+				if($_FILES['avatar']['error'] == 0) {
+					$avatar_name = uniqid() . '_' . $_FILES['avatar']['name'];
+					$pathUpload = 'uploads/';
+					move_uploaded_file($_FILES['avatar']['tmp_name'], $pathUpload . $avatar_name);
+				}
 			}
 		}
 	?>
 
-	<form action="#" name="register" method="post">
+	<form action="#" name="register" method="post" enctype="multipart/form-data">
 		<p>
 			Tên: <input type="text" name="name" value="<?php echo $name; ?>">
 			<span><?php echo $errName; ?></span>
+		</p>
+		<p>
+			Avatar: <input type="file" name="avatar">
+			<?php
+				if($avatar_name != '') echo "<img src=$pathUpload/$avatar_name width='150'>";
+			?>
 		</p>
 		<p>
 			Email: <input type="email" name="email" value="<?php echo $email; ?>">
