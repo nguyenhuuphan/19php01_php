@@ -11,6 +11,17 @@
 <body>
 
 	<?php
+
+		$arrGender = array(
+			'nam' => 'Nam',
+			'nu' => 'Nữ',
+		);
+		$arrCity = array(
+			'dn' => 'Đà Nẵng',
+			'hn' => 'Hà Nội',
+			'hcm' => 'Hồ Chí Minh',
+		);
+
 		$name = $email = $sdt = $gender = $city = $date = $errName = $errEmail = $errSdt = $errGender = $errCity = $errDate = '';
 		if(isset($_POST['register_submit'])) {
 			$name = $_POST['name'];
@@ -69,9 +80,7 @@
 				$check = true;
 			}
 			if($check) {
-				echo 'ngon';
-			} else {
-				echo 'ko ngon';
+				echo "Name: $name <br> Email: $email <br> Phone: $sdt <br> Gender: " . $arrGender["$gender"] . "<br> City: " . $arrCity["$city"] . "<br>" . "Birthday: $date";
 			}
 		}
 	?>
