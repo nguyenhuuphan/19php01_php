@@ -372,7 +372,16 @@
             <!-- /.box-header -->
 
 				<?php
-					$errName = $errCity = $errEmail = $errDate = $errGender = $errPhone = $name = $email = $city = $date = $gender = $avatar = $phone = '';
+					$arrGender = array(
+						'male' => 'Nam',
+						'female' => 'Nữ',
+					);
+					$arrCity = array(
+						'dn' => 'Đà Nẵng',
+						'hn' => 'Hà Nội',
+						'hcm' => 'Hồ Chí Minh',
+					);
+					$errName = $errCity = $errEmail = $errDate = $errGender = $errPhone = $name = $email = $city = $date = $gender = $avatar_name = $phone = '';
 					if(isset($_POST['register'])) {
 						$name = $_POST['name'];
 						$email = $_POST['email'];
@@ -410,6 +419,18 @@
 								$check = false;
 							}
 						}
+
+						if($check) {
+							echo "Name: $name <br> Email: $email <br> Phone: $phone <br> Gender: " . $arrGender["$gender"] . "<br> City: " . $arrCity["$city"] . "<br>" . "Birthday: $date";
+
+							// Upload Avatar
+
+							if($_FILES['avatar']['error'] == 0) {
+								$avatar_name = uniqid() . '_' . $_FILES['avatar']['name'];
+								$pathUpload = 'assets/img/uploads/';
+								move_uploaded_file($_FILES['avatar']['tmp_name'], $pathUpload . $avatar_name);
+							}
+						}
 					}
 				?>
 
@@ -418,62 +439,62 @@
               <div class="box-body">
                 <div class="form-group <?php echo ($errName != '')?'has-error':''; ?>">
                   <label for="inputName">Name</label>
-                  <input type="text" class="form-control" id="inputName" placeholder="Enter Name" name="name" value="<?php echo $name; ?>">
-                  <span class="error-block"><?php echo $errName ?></span>
+                  <input type="text" class="form-control" id="inputName" placeholder="Enter Name" name="name" value="<?= $name; ?>">
+                  <span class="error-block help-block"><?php echo $errName ?></span>
                 </div>
-                <div class="form-group has-success">
+                <div class="form-group <?php echo ($errEmail != '')?'has-error':''; ?>">
                   <label for="inputEmail">Email address</label>
-                  <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" name="email">
-                  <span class="error-block"><?php echo $errEmail ?></span>
+                  <input type="email" class="form-control" id="inputEmail" placeholder="Enter email" name="email" value="<?= $email; ?>">
+                  <span class="error-block help-block"><?php echo $errEmail ?></span>
                 </div>
-                <div class="form-group">
+                <div class="form-group <?php echo ($errPhone != '')?'has-error':''; ?>">
                   <label for="inputPhone">Phone</label>
-                  <input type="text" class="form-control" id="inputPhone" placeholder="Enter Phone" name="phone">
-                  <span class="error-block"><?php echo $errPhone ?></span>
+                  <input type="text" class="form-control" id="inputPhone" placeholder="Enter Phone" name="phone" value="<?= $phone; ?>">
+                  <span class="error-block help-block"><?php echo $errPhone ?></span>
                 </div>
                 <div class="form-group">
                   <label for="inputFile">Avatar</label>
                   <input type="file" id="inputFile" name="avatar">
                 </div>
                 <?php 
-                	if($avatar != ''){
-                		echo "<div class='form-group'><img src='". $avatar ."'></div>";
+                	if($avatar_name != ''){
+                		echo "<div class='form-group'><img src='". $pathUpload . $avatar_name ."'></div>";
                 	}
                 ?>
-				<div class="form-group has-error">
+				<div class="form-group <?php echo ($errCity != '')?'has-error':''; ?>">
 					<label>City</label>
 					<select class="form-control select2" style="width: 100%;" name="city">
 					  <option value="">Choose a City</option>
-					  <option value="dn">Đà Nẵng</option>
-					  <option value="hcm">Hồ Chí Minh</option>
-					  <option value="hn">Hà Nội</option>
+					  <option value="dn" <?php echo ($city == 'dn')?'selected':''; ?>>Đà Nẵng</option>
+					  <option value="hcm" <?php echo ($city == 'hcm')?'selected':''; ?>>Hồ Chí Minh</option>
+					  <option value="hn" <?php echo ($city == 'hn')?'selected':''; ?>>Hà Nội</option>
 					</select>
-                	<span class="error-block"><?php echo $errCity ?></span>
+                	<span class="error-block help-block"><?php echo $errCity ?></span>
 				</div>
-				<div class="form-group has-success">
+				<div class="form-group <?php echo ($errGender != '')?'has-error':''; ?>">
 					<label style="display: block;">
 					  Gender
 					</label>
 					<label>
-					  <input type="radio" name="gender" class="minimal" value="male">
+					  <input type="radio" name="gender" class="minimal" value="male" <?php echo ($gender == 'male')?'checked':''; ?>>
 					  Male
 					</label>
 					<label>
-					  <input type="radio" name="gender" class="minimal" value="female">
+					  <input type="radio" name="gender" class="minimal" value="female" <?php echo ($gender == 'female')?'checked':''; ?>>
 					  Female
 					</label>
-                 	<span class="error-block"><?php echo $errGender ?></span>
+                 	<span class="error-block help-block"><?php echo $errGender ?></span>
 				</div>
-				<div class="form-group">
+				<div class="form-group <?php echo ($errDate != '')?'has-error':''; ?>">
 	                <label>Birthday</label>
 
 	                <div class="input-group date">
 	                  <div class="input-group-addon">
 	                    <i class="fa fa-calendar"></i>
 	                  </div>
-	                  <input type="text" class="form-control pull-right" id="datepicker" name="date">
+	                  <input type="text" class="form-control pull-right" id="datepicker" name="date" value="<?= $date; ?>">
 	                </div>
-                 	<span class="error-block"><?php echo $errDate ?></span>
+                 	<span class="error-block help-block"><?php echo $errDate ?></span>
 	            </div>
 
               <div class="box-footer">
