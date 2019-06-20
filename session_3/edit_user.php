@@ -19,7 +19,7 @@
     <section class="content">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Register</h3>
+              <h3 class="box-title">Edit User</h3>
             </div>
             <!-- /.box-header -->
 
@@ -36,8 +36,23 @@
 						'hn' => 'Hà Nội',
 						'hcm' => 'Hồ Chí Minh',
 					);
+
+					$id = $_GET['id'];
+					$pathUpload = 'assets/img/uploads/';
 					$errName = $errCity = $errEmail = $errDate = $errGender = $errPhone = $name = $email = $city = $date = $gender = $avatar_name = $phone = '';
-					if(isset($_POST['register'])) {
+					$getOne = $conn->query("SELECT * FROM users WHERE id = $id");
+					if($getOne->num_rows > 0) {
+						while ($getOneRow = $getOne->fetch_assoc()) {
+							$name = $getOneRow['name'];
+							$email = $getOneRow['email'];
+							$city = $getOneRow['city'];
+							$date = $getOneRow['birthday'];
+							$gender = $getOneRow['gender'];
+							$phone = $getOneRow['phone'];
+							$avatar_name = $getOneRow['avatar'];
+						}
+					}
+					if(isset($_POST['edit_user'])) {
 						$name = $_POST['name'];
 						$email = $_POST['email'];
 						$city = $_POST['city'];
@@ -80,22 +95,16 @@
 							// Upload Avatar
 
 							if($_FILES['avatar']['error'] == 0) {
+								unlink($pathUpload . $avatar_name);
 								$avatar_name = uniqid() . '_' . $_FILES['avatar']['name'];
-								$pathUpload = 'assets/img/uploads/';
 								move_uploaded_file($_FILES['avatar']['tmp_name'], $pathUpload . $avatar_name);
 							}
 
-							$check_conn = $conn->query("SELECT id FROM users WHERE email = '$email' LIMIT 1");
-							if($check_conn->num_rows == 0) {
-
-								$sql = "INSERT INTO users (name, email, phone, gender, city, birthday, avatar) VALUES ('$name', '$email', '$phone', '$gender', '$city', '$date', '$avatar_name')";
-								if ($conn->query($sql) === TRUE) {
-								    header("Location: list_users.php");
-								} else {
-								    echo "Error: " . $sql . "<br>" . $conn->error;
-								}
+							$sql = "UPDATE users SET name = '$name', email = '$email', phone = '$phone', gender = '$gender', city = '$city', birthday = '$date', avatar = '$avatar_name' WHERE id = $id";
+							if ($conn->query($sql) === TRUE) {
+							    header("Location: list_users.php");
 							} else {
-								echo "Có rồi thêm chi nữa";
+							    echo "Error: " . $sql . "<br>" . $conn->error;
 							}
 
 						}
@@ -103,7 +112,7 @@
 				?>
 
             <!-- form start -->
-            <form role="form" name="registerForm" action="#" method="post" enctype="multipart/form-data">
+            <form role="form" name="editForm" action="#" method="post" enctype="multipart/form-data">
               <div class="box-body">
                 <div class="form-group <?php echo ($errName != '')?'has-error':''; ?>">
                   <label for="inputName">Name</label>
@@ -166,7 +175,7 @@
 	            </div>
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary" name="register">Register</button>
+                <button type="submit" class="btn btn-primary" name="edit_user">Edit</button>
               </div>
             </form>
           </div>
