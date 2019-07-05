@@ -19,7 +19,7 @@
     <section class="content">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">List Users</h3>
+              <h3 class="box-title">List Products</h3>
             </div>
             <div class="box-body">
               <table class="table table-bordered">
@@ -34,12 +34,9 @@
                   <td>Action</td>
                 </tr>
                 <?php
-        					require_once 'connect.php';
-                	$sql = "SELECT P.id, P.name, P.price, P.quantity, P.image_name, P.description, C.name as cat_name FROM products as P LEFT JOIN product_categories as C ON P.cat_id = C.id";
-                	$list = $conn->query($sql);
-                	if($list->num_rows > 0) {
+                	if($listproducts->num_rows > 0) {
                     $i = 1;
-                		while($row = $list->fetch_assoc()) {
+                		while($row = $listproducts->fetch_assoc()) {
                 ?>
 			                <tr>
 			                  <td><?php echo $i ?></td>
@@ -50,12 +47,12 @@
 			                  	<?php
 			                  		if($row['image_name'] != '') {
 			                  	?>
-				                  	<img src="assets/img/uploads/products/<?php echo $row['image_name']; ?>" width="100%">
+				                  	<img src="uploads/products/<?php echo $row['image_name']; ?>" width="100%">
 				                <?php } ?>
 			                  </td>
 			                  <td><?php echo ($row['cat_name'])?$row['cat_name']:'No Category'; ?></td>
                         <td><?php echo $row['description']; ?></td>
-			                  <td><span><a href="edit_product.php?id=<?= $row['id']; ?>">Edit</a></span>/<span><a href="delete_product.php?id=<?= $row['id']; ?>">Delete</a></span></td>
+                        <td><span><a href="index.php?controller=products&action=edit_product&id=<?= $row['id']; ?>">Edit</a></span>/<span><a href="index.php?controller=products&action=del_product&id=<?= $row['id']; ?>">Delete</a></span></td>
 			                </tr>
                 <?php
                       $i++;

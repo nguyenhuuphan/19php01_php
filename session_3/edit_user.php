@@ -25,7 +25,6 @@
 
 				<?php
 
-					require_once 'connect.php';
 
 					$arrGender = array(
 						'male' => 'Nam',

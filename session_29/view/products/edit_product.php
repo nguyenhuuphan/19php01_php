@@ -19,76 +19,12 @@
     <section class="content">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">Add New Product</h3>
+              <h3 class="box-title">Edit Product</h3>
             </div>
             <!-- /.box-header -->
 
-				<?php
-
-					require_once 'connect.php';
-					include 'function/common.php';
-
-					$arrCat = array();
-					$cats = $conn->query("SELECT * FROM product_categories");
-					if($cats->num_rows > 0) {
-						while ($row = $cats->fetch_assoc()) {
-							$arrCat[$row['id']] = $row['name']; 
-						}
-					}
-					$errName = $errCat = $errPrice = $errQtt = $errDes = $des = $name = $cat = $price = $qtt = $image_name = '';
-					if(isset($_POST['add_product'])) {
-						$name = $_POST['name'];
-						$qtt = $_POST['quantity'];
-						$cat = $_POST['category'];
-						$price = $_POST['price'];
-						$des = $_POST['description'];
-						$check = true;
-						if($name == '') {
-							$errName = 'Please Enter Product Name!';
-							$check = false;
-						}
-
-						if(checkExist("name", $name, "products", $conn)) {
-							$check = false;
-							$errName = 'Product Name Exist!';
-						}
-						if($cat == '') {
-							$errCat = 'Please Choose A Category!';
-							$check = false;
-						}
-						if($price == '') {
-							$errPrice = 'Please Enter Product Price!';
-							$check = false;
-						} else {
-							if(!is_numeric($price)) {
-								$errPrice = 'Product Price Must Be Numberic!';
-								$check = false;
-							}
-						}
-
-						if($check) {
-
-							// Upload Avatar
-
-							if($_FILES['image']['error'] == 0) {
-								$image_name = uniqid() . '_' . $_FILES['image']['name'];
-								$pathUpload = 'assets/img/uploads/products/';
-								move_uploaded_file($_FILES['image']['tmp_name'], $pathUpload . $image_name);
-							}
-
-
-								$sql = "INSERT INTO products (name, price, quantity, cat_id, image_name, description) VALUES ('$name', '$price', $qtt, $cat, '$image_name', '$des')";
-								if ($conn->query($sql) === TRUE) {
-								    header("Location: list_products.php");
-								} else {
-								    echo "Error: " . $sql . "<br>" . $conn->error;
-								}
-						}
-					}
-				?>
-
             <!-- form start -->
-            <form role="form" name="addProduct" action="#" method="post" enctype="multipart/form-data">
+            <form role="form" name="editProduct" action="#" method="post" enctype="multipart/form-data">
               <div class="box-body">
                 <div class="form-group <?php echo ($errName != '')?'has-error':''; ?>">
                   <label for="inputName">Product Name</label>
@@ -134,7 +70,7 @@
                 </div>
 
               <div class="box-footer">
-                <button type="submit" class="btn btn-primary" name="add_product">Add New</button>
+                <button type="submit" class="btn btn-primary" name="edit_product">Edit</button>
               </div>
             </form>
           </div>

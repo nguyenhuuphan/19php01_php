@@ -25,9 +25,6 @@
 
 				<?php
 
-					require_once 'connect.php';
-			        include 'function/common.php';
-
 					$arrGender = array(
 						'male' => 'Nam',
 						'female' => 'Nữ',
@@ -37,70 +34,6 @@
 						'hn' => 'Hà Nội',
 						'hcm' => 'Hồ Chí Minh',
 					);
-					$errName = $errCity = $errEmail = $errDate = $errGender = $errPhone = $name = $email = $city = $date = $gender = $avatar_name = $phone = '';
-					if(isset($_POST['register'])) {
-						$name = $_POST['name'];
-						$email = $_POST['email'];
-						$city = $_POST['city'];
-						$date = $_POST['date'];
-						$gender = (isset($_POST['gender']))?$_POST['gender']:'';
-						$phone = $_POST['phone'];
-						$check = true;
-						if($name == '') {
-							$errName = 'Please Enter Your Name!';
-							$check = false;
-						}
-						if($email == '') {
-							$errEmail = 'Please Enter Your Email!';
-							$check = false;
-						}
-						if($city == '') {
-							$errCity = 'Please Choose A City!';
-							$check = false;
-						}
-						if($date == '') {
-							$errDate = 'Please Pick a Date!';
-							$check = false;
-						}
-						if($gender == '') {
-							$errGender = 'Please Choose Gender!';
-							$check = false;
-						}
-						if($phone == '') {
-							$errPhone = 'Please Enter Your Phone Number!';
-							$check = false;
-						} else {
-							if(!is_numeric($phone)) {
-								$errPhone = 'Phone Number Must Be Numberic!';
-								$check = false;
-							}
-						}
-
-						if(checkExist("email", $email, "users", $conn)) {
-							$check = false;
-							$errEmail = 'Email Exist!';
-						}
-
-						if($check) {
-
-							// Upload Avatar
-
-							if($_FILES['avatar']['error'] == 0) {
-								$avatar_name = uniqid() . '_' . $_FILES['avatar']['name'];
-								$pathUpload = 'assets/img/uploads/';
-								move_uploaded_file($_FILES['avatar']['tmp_name'], $pathUpload . $avatar_name);
-							}
-
-
-								$sql = "INSERT INTO users (name, email, phone, gender, city, birthday, avatar) VALUES ('$name', '$email', '$phone', '$gender', '$city', '$date', '$avatar_name')";
-								if ($conn->query($sql) === TRUE) {
-								    header("Location: list_users.php");
-								} else {
-								    echo "Error: " . $sql . "<br>" . $conn->error;
-								}
-
-						}
-					}
 				?>
 
             <!-- form start -->

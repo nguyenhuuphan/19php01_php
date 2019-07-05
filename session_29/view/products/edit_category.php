@@ -23,45 +23,6 @@
             </div>
             <!-- /.box-header -->
 
-				<?php
-
-					require_once 'connect.php';
-          include 'function/common.php';
-					$errName = $name = '';
-          $id = $_GET['id'];
-          $getOne = $conn->query("SELECT * FROM product_categories WHERE id = $id");
-          if($getOne->num_rows > 0) {
-            while ($getOneRow = $getOne->fetch_assoc()) {
-              $oldname = $getOneRow['name'];
-            }
-          }
-					if(isset($_POST['edit_cat'])) {
-						$name = $_POST['name'];
-						$check = true;
-						if($name == '') {
-							$errName = 'Please Enter Category Name!';
-							$check = false;
-						}
-            if($oldname != $name) {
-              if(checkExist("name", $name, "product_categories", $conn)) {
-                $check = false;
-                $errName = 'Category Exist!';
-              }
-            }
-
-						if($check) {
-
-								$sql = "UPDATE product_categories SET name = '$name' WHERE id = $id";
-								if ($conn->query($sql) === TRUE) {
-								    header("Location: list_categories.php");
-								} else {
-								    echo "Error: " . $sql . "<br>" . $conn->error;
-								}
-
-						}
-					}
-				?>
-
             <!-- form start -->
             <form role="form" name="editCategory" action="#" method="post" enctype="multipart/form-data">
               <div class="box-body">

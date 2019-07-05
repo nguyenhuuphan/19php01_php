@@ -23,37 +23,6 @@
             </div>
             <!-- /.box-header -->
 
-				<?php
-
-					require_once 'connect.php';
-          include 'function/common.php';
-					$errName = $name = '';
-					if(isset($_POST['add_cat'])) {
-						$name = $_POST['name'];
-						$check = true;
-						if($name == '') {
-							$errName = 'Please Enter Your Name!';
-							$check = false;
-						}
-
-            if(checkExist("name", $name, "product_categories", $conn)) {
-              $check = false;
-              $errName = 'Category Name Exist!';
-            }
-
-						if($check) {
-
-
-								$sql = "INSERT INTO product_categories (name) VALUES ('$name')";
-								if ($conn->query($sql) === TRUE) {
-								    header("Location: list_categories.php");
-								} else {
-								    echo "Error: " . $sql . "<br>" . $conn->error;
-								}
-
-						}
-					}
-				?>
 
             <!-- form start -->
             <form role="form" name="addCategory" action="#" method="post" enctype="multipart/form-data">
