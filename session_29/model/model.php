@@ -74,18 +74,5 @@
 			$newsRelated = "Tin lien quan";
 			return $newsRelated;
 		}
-		public function getProductPage() {
-			$sql = "SELECT * FROM products";
-			$productList = mysqli_query($this->connect(), $sql);
-			return $productList;
-		}
-		public function getProductDetail($id) {
-			$productDetail = 'Chi tiet san pham '.$id;
-			return $productDetail;
-		}
-		public function deleteProduct($id) {
-			$sql = "DELETE FROM products WHERE id = $id";
-			return mysqli_query($this->connect(), $sql);
-		}
 	}
 ?>
