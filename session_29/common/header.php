@@ -42,9 +42,9 @@
 	    <!-- Logo -->
 	    <a href="index.php" class="logo">
 	      <!-- mini logo for sidebar mini 50x50 pixels -->
-	      <span class="logo-mini"><b>A</b>LT</span>
+	      <span class="logo-mini"><b>Home</b></span>
 	      <!-- logo for regular state and mobile devices -->
-	      <span class="logo-lg"><b>Admin</b>LTE</span>
+	      <span class="logo-lg"><b>Homepage</b></span>
 	    </a>
 
 	    <!-- Header Navbar: style can be found in header.less -->
@@ -342,8 +342,8 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.php?controller=users&action=list_users"><i class="fa fa-circle-o"></i> List Users</a></li>
-            <li class="active"><a href="index.php?controller=users&action=add_user"><i class="fa fa-circle-o"></i> Register</a></li>
+            <li><a href="admin.php?controller=users&action=list_users"><i class="fa fa-circle-o"></i> List Users</a></li>
+            <li class="active"><a href="admin.php?controller=users&action=add_user"><i class="fa fa-circle-o"></i> Register</a></li>
           </ul>
         </li>
         <li class="active treeview menu-open">
@@ -354,9 +354,22 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="index.php?controller=products&action=list_products"><i class="fa fa-circle-o"></i> List Products</a></li>
-            <li><a href="index.php?controller=products&action=add_product"><i class="fa fa-circle-o"></i> Add Product</a></li>
-            <li><a href="index.php?controller=products&action=list_categories"><i class="fa fa-circle-o"></i> Categories</a></li>
+            <li><a href="admin.php?controller=products&action=list_products"><i class="fa fa-circle-o"></i> List Products</a></li>
+            <li><a href="admin.php?controller=products&action=add_product"><i class="fa fa-circle-o"></i> Add Product</a></li>
+            <li><a href="admin.php?controller=products&action=list_categories"><i class="fa fa-circle-o"></i> Categories</a></li>
+          </ul>
+        </li>
+        <li class="active treeview menu-open">
+          <a href="#">
+            <i class="fa fa-dashboard"></i> <span>News</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="admin.php?controller=news&action=list_news"><i class="fa fa-circle-o"></i> List News</a></li>
+            <li><a href="admin.php?controller=news&action=add_news"><i class="fa fa-circle-o"></i> Add News</a></li>
+            <li><a href="admin.php?controller=news&action=list_categories"><i class="fa fa-circle-o"></i> Categories</a></li>
           </ul>
         </li>
       </ul>

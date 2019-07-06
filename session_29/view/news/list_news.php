@@ -19,46 +19,42 @@
     <section class="content">
           <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">List Products</h3>
+              <h3 class="box-title">List News</h3>
             </div>
             <div class="box-body">
               <table class="table table-bordered">
                 <tr>
                   <th style="width: 10px">#</th>
-                  <th>Name</th>
-                  <th>Price</th>
-                  <th>Quantity</th>
+                  <th>Title</th>
+                  <th>Content</th>
                   <th style="width: 50px">Image</th>
                   <th>Category</th>
-                  <th>Description</th>
-                  <td>Action</td>
+                  <th>Action</th>
                 </tr>
                 <?php
-                	if($listproducts->num_rows > 0) {
+                	if($listnews->num_rows > 0) {
                     $i = 1;
-                		while($row = $listproducts->fetch_assoc()) {
+                		while($row = $listnews->fetch_assoc()) {
                 ?>
 			                <tr>
 			                  <td><?php echo $i ?></td>
-			                  <td><?php echo $row['name']; ?></td>
-			                  <td><?php echo $row['price']; ?></td>
-			                  <td><?php echo $row['quantity']; ?></td>
+			                  <td><a href="admin.php?controller=news&action=view_detail&id=<?= $row['id']; ?>"><?php echo $row['title']; ?></a></td>
+                        <td><?php echo $row['content']; ?></td>
 			                  <td>
 			                  	<?php
-			                  		if($row['image_name'] != '') {
+			                  		if($row['image'] != '') {
 			                  	?>
-				                  	<img src="uploads/products/<?php echo $row['image_name']; ?>" width="100%">
+				                  	<img src="uploads/posts/<?php echo $row['image']; ?>" width="100%">
 				                <?php } ?>
 			                  </td>
 			                  <td><?php echo ($row['cat_name'])?$row['cat_name']:'No Category'; ?></td>
-                        <td><?php echo $row['description']; ?></td>
-                        <td><span><a href="admin.php?controller=products&action=edit_product&id=<?= $row['id']; ?>">Edit</a></span>/<span><a href="admin.php?controller=products&action=del_product&id=<?= $row['id']; ?>">Delete</a></span></td>
+                        <td><span><a href="admin.php?controller=news&action=edit_news&id=<?= $row['id']; ?>">Edit</a></span>/<span><a href="admin.php?controller=news&action=del_news&id=<?= $row['id']; ?>">Delete</a></span></td>
 			                </tr>
                 <?php
                       $i++;
                 		}
                 	} else {
-                		echo '<tr><td colspan="4">Khong co sản phẩm nao</td></tr>';
+                		echo '<tr><td colspan="4">Khong co bai viet nao</td></tr>';
                 	}
                 ?>
               </table>

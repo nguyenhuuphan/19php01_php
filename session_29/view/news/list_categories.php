@@ -36,7 +36,7 @@
                       <tr>
                         <td><?php echo $i ?></td>
                         <td><?php echo $row['name']; ?></td>
-                        <td><span><a href="admin.php?controller=products&action=edit_category&id=<?= $row['id']; ?>">Edit</a></span>/<span><a href="admin.php?controller=products&action=del_category&id=<?= $row['id']; ?>">Delete</a></span></td>
+                        <td><span><a href="admin.php?controller=news&action=edit_category&id=<?= $row['id']; ?>">Edit</a></span>/<span><a href="admin.php?controller=news&action=del_category&id=<?= $row['id']; ?>">Delete</a></span></td>
                       </tr>
                 <?php
                       $i++;
@@ -48,7 +48,7 @@
               </table>
             </div>
           </div>
-            <p><a href="admin.php?controller=products&action=add_category" class="btn btn-app"><i class="fa fa-plus"></i>Add New Category</a></p>
+            <p><a href="admin.php?controller=news&action=add_category" class="btn btn-app"><i class="fa fa-plus"></i>Add New Category</a></p>
     </section>
     <!-- /.content -->
   </div>

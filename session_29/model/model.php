@@ -52,24 +52,35 @@
 			return mysqli_query($this->connect(), $sql);
 		}
 
-		public function getCategories() {
-			$sql = "SELECT * FROM product_categories";
+		public function getCategories($table) {
+			$sql = "SELECT * FROM $table";
         	$listcat = mysqli_query($this->connect(), $sql);
         	return $listcat;
 		}
-		public function editCat($id, $name) {
-			$sql = "UPDATE product_categories SET name = '$name' WHERE id = $id";
+		public function editCat($id, $name, $table) {
+			$sql = "UPDATE $table SET name = '$name' WHERE id = $id";
 			return mysqli_query($this->connect(), $sql);
 		}
-		public function addCat($name) {
-			$sql = "INSERT INTO product_categories (name) VALUES ('$name')";
+		public function addCat($name, $table) {
+			$sql = "INSERT INTO $table (name) VALUES ('$name')";
 			return mysqli_query($this->connect(), $sql);
 		}
 
 		public function getNews() {
-			$news = 'Test news abc';
-			return $news;
+        	$sql = "SELECT P.id, P.title, P.image, P.content, C.name as cat_name FROM news as P LEFT JOIN news_categories as C ON P.cat_id = C.id";
+        	$listNews = mysqli_query($this->connect(), $sql);
+			return $listNews;
 		}
+		public function addNews($name, $cat, $image_name, $des) {
+			$sql = "INSERT INTO news (title, cat_id, image, content) VALUES ('$name', $cat, '$image_name', '$des')";
+			return mysqli_query($this->connect(), $sql);
+		}
+		public function editNews($id, $name, $cat, $image_name, $des) {
+			$sql = "UPDATE news SET title = '$name', cat_id = $cat, image = '$image_name', content = '$des' WHERE id = $id";
+			return mysqli_query($this->connect(), $sql);
+		}
+
+
 		public function getNewsRelated() {
 			$newsRelated = "Tin lien quan";
 			return $newsRelated;

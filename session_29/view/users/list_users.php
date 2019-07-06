@@ -63,7 +63,7 @@
 			                  <td><?php echo $arrCity[$row['city']]; ?></td>
 			                  <td><?php echo $arrGender[$row['gender']]; ?></td>
 			                  <td><?php echo $row['birthday']; ?></td>
-			                  <td><span><a href="index.php?controller=users&action=edit_user&id=<?= $row['id']; ?>">Edit</a></span>/<span><a href="index.php?controller=users&action=del_user&id=<?= $row['id']; ?>">Delete</a></span></td>
+			                  <td><span><a href="admin.php?controller=users&action=edit_user&id=<?= $row['id']; ?>">Edit</a></span>/<span><a href="admin.php?controller=users&action=del_user&id=<?= $row['id']; ?>">Delete</a></span></td>
 			                </tr>
                 <?php
                 		$i++;
