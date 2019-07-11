@@ -23,6 +23,11 @@
 			$getOneUser = mysqli_query($this->connect(), $sql);
 			return $getOneUser;
 		}
+		public function getOneSlug($slug, $table) {
+			$sql = "SELECT * FROM $table WHERE slug LIKE '$slug'";
+			$getOneUser = mysqli_query($this->connect(), $sql);
+			return $getOneUser;
+		}
 
 		public function getUsers() {
 			$sql = "SELECT * FROM users";
@@ -67,16 +72,16 @@
 		}
 
 		public function getNews() {
-        	$sql = "SELECT P.id, P.title, P.image, P.content, C.name as cat_name FROM news as P LEFT JOIN news_categories as C ON P.cat_id = C.id";
+        	$sql = "SELECT P.id, P.title, P.image, P.content, C.name as cat_name, slug FROM news as P LEFT JOIN news_categories as C ON P.cat_id = C.id";
         	$listNews = mysqli_query($this->connect(), $sql);
 			return $listNews;
 		}
-		public function addNews($name, $cat, $image_name, $des) {
-			$sql = "INSERT INTO news (title, cat_id, image, content) VALUES ('$name', $cat, '$image_name', '$des')";
+		public function addNews($name, $cat, $image_name, $des, $slug) {
+			$sql = "INSERT INTO news (title, cat_id, image, content, slug) VALUES ('$name', $cat, '$image_name', '$des', '$slug')";
 			return mysqli_query($this->connect(), $sql);
 		}
-		public function editNews($id, $name, $cat, $image_name, $des) {
-			$sql = "UPDATE news SET title = '$name', cat_id = $cat, image = '$image_name', content = '$des' WHERE id = $id";
+		public function editNews($id, $name, $cat, $image_name, $des, $slug) {
+			$sql = "UPDATE news SET title = '$name', cat_id = $cat, image = '$image_name', content = '$des', slug = '$slug' WHERE id = $id";
 			return mysqli_query($this->connect(), $sql);
 		}
 

@@ -1,0 +1,1 @@
+<?php echo "<pre>"; var_dump($getOneNews->fetch_assoc()); ?>

@@ -395,7 +395,7 @@
 							include 'view/news/list_news.php';
 							break;
 						case 'add_news':
-							$errName = $errCat = $errDes = $des = $name = $cat = $image_name = '';
+							$errName = $errCat = $errDes = $des = $name = $cat = $image_name = $slug = '';
 							if(isset($_POST['add_post'])) {
 								$name = $_POST['name'];
 								$cat = $_POST['category'];
@@ -415,7 +415,10 @@
 									$check = false;
 								}
 
+
 								if($check) {
+
+									$slug = $functionCommon->slug($name);
 
 									// Upload Avatar
 
@@ -426,7 +429,7 @@
 									}
 
 
-									if ($model->addNews($name, $cat, $image_name, $des) === TRUE) {
+									if ($model->addNews($name, $cat, $image_name, $des, $slug) === TRUE) {
 									    $functionCommon->redirectPage('admin.php?controller=news&action=list_news');
 									}
 								}
@@ -462,6 +465,8 @@
 
 								if($check) {
 
+									$slug = $functionCommon->slug($name);
+
 									// Upload Avatar
 
 									if($_FILES['image']['error'] == 0) {
@@ -470,7 +475,7 @@
 										move_uploaded_file($_FILES['image']['tmp_name'], $pathUpload . $image_name);
 									}
 
-										if ($model->editNews($id, $name, $cat, $image_name, $des) === TRUE) {
+										if ($model->editNews($id, $name, $cat, $image_name, $des, $slug) === TRUE) {
 										    $functionCommon->redirectPage('admin.php?controller=news&action=list_news');
 										}
 								}
@@ -559,35 +564,6 @@
 							include 'view/news/add_category.php';
 							break;
 
-						default:
-							# code...
-							break;
-					}
-					break;
-				default:
-					# code...
-					break;
-			}
-		}
-
-		public function homeHandleRequest() {
-			$model = new Model();
-			$functionCommon = new FunctionCommon();
-			$controller = isset($_GET['controller'])?$_GET['controller']:'home';
-			$action = isset($_GET['action'])?$_GET['action']:'home';
-			switch ($controller) {
-				case 'home':
-					include 'view/home/home.php';
-					break;
-				case 'page':
-					switch ($action) {
-						case 'list_news':
-							include 'view/home/news/list_news.php';
-							break;
-						case 'contact':
-							include 'view/home/contact/contact.php';
-							break;
-						
 						default:
 							# code...
 							break;
