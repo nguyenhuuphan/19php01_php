@@ -1,41 +1,48 @@
 <?php
+					session_start();
 	$request = $_SERVER['REQUEST_URI'];
 
-// Include router class
-include('libs/routes/routes.php');
+
+include('controller/routes.php');
 
 if( strpos( $request, 'admin' ) !== false ){
-	include 'controller/controller.php';
+	include 'controller/adminController.php';
 } else {
-    include 'controller/homeController.php';
+    include 'controller/pageController.php';
 }
 
-// Add base route (startpage)
+// Base Route
 Route::add('/',function(){
-	$controller = new homeController();
+	$controller = new pageController();
 	$controller->pageRequest('home');
 });
-Route::add('/contact',function(){
-	$controller = new homeController();
-	$controller->pageRequest('contact');
-});
 
+
+// Admin Route
 Route::add('/admin',function(){
-	$controller = new Controller();
-	$controller->adminHandleRequest();
+	$controller = new adminController();
+	$controller->adminRequest();
 });
 
-// Simple test route that simulates static html file
+// Page
 Route::add('/news',function(){
-	$controller = new homeController();
+	$controller = new pageController();
 	$controller->pageRequest('news');
 });
+Route::add('/contact',function(){
+	$controller = new pageController();
+	$controller->pageRequest('contact');
+});
+Route::add('/products',function(){
+	$controller = new pageController();
+	$controller->pageRequest('products');
+});
 
 
-// Accept only numbers as parameter. Other characters will result in a 404 error
-Route::add('/news/([a-zA-Z0-9-]*)',function($para){
-	$controller = new homeController();
-	$controller->newsRequest($para);
+// Single
+Route::add('/([a-zA-Z0-9-]*)/([a-zA-Z0-9-]*)',function($type, $slug){
+	$controller = new pageController();
+	$controller->pageRequest($type, $slug);
 });
 
 Route::run('/');

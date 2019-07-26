@@ -28,6 +28,10 @@
 			$getOneUser = mysqli_query($this->connect(), $sql);
 			return $getOneUser;
 		}
+		public function query($sql) {
+			$var = mysqli_query($this->connect(), $sql);
+			return $var;
+		}
 
 		public function getUsers() {
 			$sql = "SELECT * FROM users";
@@ -44,16 +48,16 @@
 		}
 
 		public function getProducts() {
-        	$sql = "SELECT P.id, P.name, P.price, P.quantity, P.image_name, P.description, C.name as cat_name FROM products as P LEFT JOIN product_categories as C ON P.cat_id = C.id";
+        	$sql = "SELECT P.id, P.name, P.price, P.quantity, P.image_name, P.description, C.name as cat_name, slug FROM products as P LEFT JOIN product_categories as C ON P.cat_id = C.id";
         	$listproducts = mysqli_query($this->connect(), $sql);
         	return $listproducts;
 		}
-		public function addProduct($name, $price, $qtt, $cat, $image_name, $des) {
-			$sql = "INSERT INTO products (name, price, quantity, cat_id, image_name, description) VALUES ('$name', '$price', $qtt, $cat, '$image_name', '$des')";
+		public function addProduct($name, $price, $qtt, $cat, $image_name, $des, $slug) {
+			$sql = "INSERT INTO products (name, price, quantity, cat_id, image_name, description, slug) VALUES ('$name', '$price', $qtt, $cat, '$image_name', '$des', '$slug')";
 			return mysqli_query($this->connect(), $sql);
 		}
-		public function editProduct($id, $name, $price, $qtt, $cat, $image_name, $des) {
-			$sql = "UPDATE products SET name = '$name', price = $price, quantity = $qtt, cat_id = $cat, image_name = '$image_name', description = '$des' WHERE id = $id";
+		public function editProduct($id, $name, $price, $qtt, $cat, $image_name, $des, $slug) {
+			$sql = "UPDATE products SET name = '$name', price = $price, quantity = $qtt, cat_id = $cat, image_name = '$image_name', description = '$des', slug = '$slug' WHERE id = $id";
 			return mysqli_query($this->connect(), $sql);
 		}
 
@@ -86,9 +90,10 @@
 		}
 
 
-		public function getNewsRelated() {
-			$newsRelated = "Tin lien quan";
-			return $newsRelated;
+		public function loginAdmin($email) {
+			$sql = "SELECT id FROM users WHERE email = '$email'";
+			$check = mysqli_query($this->connect(), $sql);
+			return $check;
 		}
 	}
 ?>

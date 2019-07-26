@@ -6,21 +6,19 @@
 			$model = new Model();
 			$functionCommon = new FunctionCommon();
 			$controller = isset($_GET['controller'])?$_GET['controller']:'admin';
-			$action = isset($_GET['action'])?$_GET['action']:'not_login';
+			$action = isset($_GET['action'])?$_GET['action']:'';
 			switch ($controller) {
 				case 'admin':
 					switch ($action) {
-						case 'not_login':
-							echo "login";
-							break;
-						case 'loged_in':
-							include 'view/admin/admin.php';
+						case 'logout':
+							session_destroy();
 							break;
 						
 						default:
 							# code...
 							break;
 					}
+				include 'view/admin/admin.php';
 					break;
 				case 'users':
 					$pathUpload = 'uploads/';
@@ -191,7 +189,7 @@
 							include 'view/products/list_products.php';
 							break;
 						case 'add_product':
-							$errName = $errCat = $errPrice = $errQtt = $errDes = $des = $name = $cat = $price = $qtt = $image_name = '';
+							$errName = $errCat = $errPrice = $errQtt = $errDes = $des = $name = $cat = $price = $qtt = $image_name = $slug = '';
 							if(isset($_POST['add_product'])) {
 								$name = $_POST['name'];
 								$qtt = $_POST['quantity'];
@@ -224,6 +222,8 @@
 
 								if($check) {
 
+									$slug = $functionCommon->slug($name);
+
 									// Upload Avatar
 
 									if($_FILES['image']['error'] == 0) {
@@ -233,7 +233,7 @@
 									}
 
 
-									if ($model->addProduct($name, $price, $qtt, $cat, $image_name, $des) === TRUE) {
+									if ($model->addProduct($name, $price, $qtt, $cat, $image_name, $des, $slug) === TRUE) {
 									    $functionCommon->redirectPage('admin.php?controller=products&action=list_products');
 									}
 								}
@@ -242,7 +242,7 @@
 							break;
 						case 'edit_product':
 							$id = $_GET['id'];
-							$errName = $errCat = $errPrice = $errQtt = $errDes = $des = $name = $cat = $price = $qtt = $image_name = '';
+							$errName = $errCat = $errPrice = $errQtt = $errDes = $des = $name = $cat = $price = $qtt = $image_name = $slug = '';
 							$pathUpload = 'uploads/products/';
 							$getOneProduct = $model->getOneRow($id, 'products');
 							if($getOneProduct->num_rows > 0) {
@@ -281,6 +281,7 @@
 								}
 
 								if($check) {
+									$slug = $functionCommon->slug($name);
 
 									// Upload Avatar
 
@@ -290,7 +291,7 @@
 										move_uploaded_file($_FILES['image']['tmp_name'], $pathUpload . $image_name);
 									}
 
-										if ($model->editProduct($id, $name, $price, $qtt, $cat, $image_name, $des) === TRUE) {
+										if ($model->editProduct($id, $name, $price, $qtt, $cat, $image_name, $des, $slug) === TRUE) {
 										    $functionCommon->redirectPage('admin.php?controller=products&action=list_products');
 										}
 								}
